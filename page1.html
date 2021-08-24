@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SignUp Page</title>
+        <script>
+            function loadotherselects(){
+                let num = parseInt(document.getElementById("letters").value) | 0;
+                let sel = document.getElementById("handler");
+                sel.innerHTML = "";
+                for (let i = 0; i < num; i++) sel.innerHTML += '<div><input type="range" value="102" min="97" step="1" max="122" class="letter" onchange="letterchange(' + i + ');"><input type="checkbox" onchange="mayuschange(' + i + ');" class="mayu" id="mayus" name="mayus"><label class="mayuslbl" id="mayusx' + i + '" for="mayus">f</label></div>';
+                sel.innerHTML += '<button onclick="writename();">enter</button>';
+                document.getElementById("name").innerHTML = "";
+            }
+            function handleletternumchange(){
+                document.getElementById("numLetters").innerText = document.getElementById("letters").value;
+            }
+            function letterchange(num = 0){
+                let inputcur = document.getElementsByClassName("letter")[num];
+                let el = document.getElementById("mayusx" + num);
+                el.innerText = String.fromCodePoint(parseInt(inputcur.value));
+
+            }
+            function mayuschange(num = 0){
+                let mayus = document.getElementsByClassName("mayu")[num];
+                let inputcur = document.getElementsByClassName("letter")[num];
+                let el = document.getElementById("mayusx" + num);
+                mayus.checked ? el.innerText = String.fromCodePoint(parseInt(inputcur.value) - 32) : e1.innerText = String.fromCodePoint(parseInt(inputcur.value));
+            }
+            function writename(){
+                let nameholder = document.getElementById("name");
+                nameholder.innerHTML = "Your name is: ";
+                let lettersname = document.getElementsByClassName("mayuslbl");
+                for (const letternow of lettersname) nameholder.innerHTML += letternow.innerText;
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Sign Up</h1>
+        <h2>Enter your name:</h2>
+        <input type="range" value="1" min="1" step="1" max="10" id="letters" onchange="handleletternumchange();">
+        <h3>Number of letters: <span id="numLetters">1</span></h3>
+        <button onclick="loadotherselects();">go</button>
+        <br>
+        <div style="display: flex; flex-direction: row;" id="handler"></div>
+        <h4 id="name"></h4>
+    </body>
+</html>
